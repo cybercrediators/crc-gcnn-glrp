@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>glrp.trainer package &#8212; glrp  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="glrp-trainer-package">
+<h1>glrp.trainer package<a class="headerlink" href="#glrp-trainer-package" title="Permalink to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-glrp.trainer.gcnn_runner">
+<span id="glrp-trainer-gcnn-runner-module"></span><h2>glrp.trainer.gcnn_runner module<a class="headerlink" href="#module-glrp.trainer.gcnn_runner" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="glrp.trainer.gcnn_runner.GCNNRunner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glrp.trainer.gcnn_runner.</span></span><span class="sig-name descname"><span class="pre">GCNNRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.gcnn_runner.GCNNRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="glrp.base.html#glrp.base.base_trainer.BaseTrainer" title="glrp.base.base_trainer.BaseTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTrainer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.trainer.gcnn_runner.GCNNRunner.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.gcnn_runner.GCNNRunner.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>run the given model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.trainer.gcnn_runner.GCNNRunner.summarize">
+<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.gcnn_runner.GCNNRunner.summarize" title="Permalink to this definition">¶</a></dt>
+<dd><p>log current values to e.g. tensorboard</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-glrp.trainer.mnist_runner">
+<span id="glrp-trainer-mnist-runner-module"></span><h2>glrp.trainer.mnist_runner module<a class="headerlink" href="#module-glrp.trainer.mnist_runner" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="glrp.trainer.mnist_runner.MnistRunner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glrp.trainer.mnist_runner.</span></span><span class="sig-name descname"><span class="pre">MnistRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.mnist_runner.MnistRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="glrp.base.html#glrp.base.base_trainer.BaseTrainer" title="glrp.base.base_trainer.BaseTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTrainer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.trainer.mnist_runner.MnistRunner.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.mnist_runner.MnistRunner.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>run the given model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.trainer.mnist_runner.MnistRunner.summarize">
+<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.mnist_runner.MnistRunner.summarize" title="Permalink to this definition">¶</a></dt>
+<dd><p>log current values to e.g. tensorboard</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-glrp.trainer.test_runner">
+<span id="glrp-trainer-test-runner-module"></span><h2>glrp.trainer.test_runner module<a class="headerlink" href="#module-glrp.trainer.test_runner" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="glrp.trainer.test_runner.Net">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glrp.trainer.test_runner.</span></span><span class="sig-name descname"><span class="pre">Net</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.test_runner.Net" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.trainer.test_runner.Net.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.test_runner.Net.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls the model on new inputs and returns the outputs as tensors.</p>
+<p>In this case <cite>call()</cite> just reapplies
+all ops in the graph to the new inputs
+(e.g. build a new computational graph from the provided inputs).</p>
+<p>Note: This method should not be called directly. It is only meant to be
+overridden when subclassing <cite>tf.keras.Model</cite>.
+To call a model on an input, always use the <cite>__call__()</cite> method,
+i.e. <cite>model(inputs)</cite>, which relies on the underlying <cite>call()</cite> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> – Input tensor, or dict/list/tuple of input tensors.</p></li>
+<li><p><strong>training</strong> – Boolean or boolean scalar tensor, indicating whether to run
+the <cite>Network</cite> in training mode or inference mode.</p></li>
+<li><p><strong>mask</strong> – <p>A mask or list of masks. A mask can be either a boolean tensor or
+None (no mask). For more details, check the guide</p>
+<blockquote>
+<div><p>[here](<a class="reference external" href="https://www.tensorflow.org/guide/keras/masking_and_padding">https://www.tensorflow.org/guide/keras/masking_and_padding</a>).</p>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tensor if there is a single output, or
+a list of tensors if there are more than one outputs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="glrp.trainer.test_runner.TestingRunner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glrp.trainer.test_runner.</span></span><span class="sig-name descname"><span class="pre">TestingRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.test_runner.TestingRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="glrp.base.html#glrp.base.base_trainer.BaseTrainer" title="glrp.base.base_trainer.BaseTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTrainer</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.trainer.test_runner.TestingRunner.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.test_runner.TestingRunner.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.trainer.test_runner.TestingRunner.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.test_runner.TestingRunner.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>run the given model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.trainer.test_runner.TestingRunner.summarize">
+<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.test_runner.TestingRunner.summarize" title="Permalink to this definition">¶</a></dt>
+<dd><p>log current values to e.g. tensorboard</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.trainer.test_runner.TestingRunner.train_step">
+<span class="sig-name descname"><span class="pre">train_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.trainer.test_runner.TestingRunner.train_step" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-glrp.trainer">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-glrp.trainer" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">glrp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Sebastian Lutz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/glrp.trainer.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

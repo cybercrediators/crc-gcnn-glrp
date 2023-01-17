@@ -1,0 +1,207 @@
+---
+title: "Preprocessing and Subtype prediction"
+output: pdf_document
+---
+
++ preprocess obtained gene expression data from the gene expression omnibus database
+
+```{r setup, include = FALSE}
+#install.packages("affy", repos = "http://cran.us.r-project.org")
+#BiocManager::install(c("SpikeInSubset", "hgu133plus2.db", "limma", "annotate"))
+#BiocManager::install(c("Biobase", "limma"))
+
+
+library(SpikeInSubset)
+library(affy)
+library(limma)
+library(annotate)
+
+# annotations for hgu133plus
+library(hgu133plus2.db)
+
+#library(sva)
+
+#install.packages("devtools")
+#install.packages("roxygen2")
+
+# install CMScaller
+#devtools::install_github("Lothelab/CMScaller")
+library(Biobase)
+# OS-independent file chooser
+library(CMScaller)
+#install.packages("rJava")
+#install.packages("rChoiceDialogs")
+library(rJava)
+library(rChoiceDialogs)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Preprocessing
++ Infos: https://www.frontiersin.org/articles/10.3389/fonc.2017.00135/full
++ read data from the current directory
++ uses the `affy` package from `bioconductor` to process affymetrix oligonucleotide arrays
++ display the used annotation resource: `hg133plus2`
+```{r preprocessing}
+# choose the working directory
+working_dir <- jchoose.dir(caption = "Select a working directory...")
+#working_dir <- "/home/lutzseba/Desktop/prm/projectmodul-ma-lutz/colectoral_data/dataset"
+setwd(working_dir)
+
+# read dataset files to be preprocessed
+preprocess_path <- jchoose.dir(caption = "Select folder to preprocess...")
+#preprocess_path <- "/home/lutzseba/Desktop/prm/projectmodul-ma-lutz/colectoral_data/dataset/to_preprocess"
+to_preprocess = list.files(path = preprocess_path, full.names = TRUE, pattern = "\\.CEL$")
+#print(to_preprocess)
+# read already preprocessed files
+preprocessed_path <- jchoose.dir(caption = "Select folder with already preprocessed files...")
+#preprocessed_path <- "/home/lutzseba/Desktop/prm/projectmodul-ma-lutz/colectoral_data/dataset/preprocessed"
+preprocessed_files = list.files(path = preprocessed_path, full.names = TRUE, pattern = "\\.CEL$")
+#print(preprocessed_files)
+
+# set working directory
+# read files
+
+preprocessed_data <- ReadAffy(filenames = preprocessed_files)
+to_preprocess_data <- ReadAffy(filenames = to_preprocess)
+# log2 transform
+#to_preprocess_data <- log(to_preprocess_data)
+#slotNames(to_preprocess_data)
+#slotNames(preprocessed_data)
+#sampleNames(to_preprocess_data)
+#sampleNames(preprocessed_data)
+annotation(to_preprocess_data)
+#annotation(preprocessed_data)
+```
++ RMA-probe summary: https://academic.oup.com/biostatistics/article/4/2/249/245074
++ Robust multichip average
++ creates an expression matrix from the given affymetrix data with:
+  + background correction $PM_{ijk} = bg_{ijk} + s_{ijk}$
+    + s: signal for probe j of probe set k on array i
+    + bg: background caused by optical noise + non-specific binding
+  + quantile normalization
+    + make n vectors have same distribution by projectin n-dim. quantile plot onto the diagonal
+  + log2 transform
+  + summarize
+    + $Y_{ijk} = \mu_{ik} + \alpha_{jk} + \epsilon_{ijk}$
+  + linear model for normalization to obtain expression measure for each probe set
++ other methods: PLIER, MAS5...
+
+```{r applyrma}
+# perform rma probe summary, quantile normalization, exclude already preprocessed files
+eset <- rma(to_preprocess_data, normalize=TRUE)
+rma_eset <- exprs(eset)
+#exprs(eset)
+#pData(eset)
+#pData(preprocessed_data)
+pdat <- pData(eset)
+dim(eset); class(eset)
+plot(rowMeans(rma_eset), pch=".",  main="Scatter plot")
+a <- rowMeans(rma_eset)
+plot(a)
+
+# combine rma applied dataset and already preprocessed data
+# convert affybatch to expression set
+preprocessed_eset <- rma(preprocessed_data, normalize = FALSE, background = FALSE)
+#combined_dataset <- eset
+#combined_eset <- rma_eset
+combined_dataset <- combine(preprocessed_eset, eset)
+combined_eset <- exprs(combined_dataset)
+#dim(combined_eset)
+dim(combined_dataset)
+```
++ (avoid batch effect)
+```{r removeBatchEffect}
+# remove batch effect(?)
+#strain <- c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+#design <- model.matrix(~factor(strain))
+#colnames(design) <- c("CC", "N")
+#design
+#dim(eset)
+#dim(design)
+
+#fit <- lmFit(eset, design)
+#ebayes <- eBayes(fit)
+#names(ebayes)
+#topTable(ebayes, coef=2)
+```
+
++ take the annotation resource (here `hgu133plus2`)
++ obtain geneIDs and symbols for the corresponding ID_REFs for the gene expression data
++ map gene IDs and symbols to the processed data
++ combine the data and annotation in a new dataframe
++ write output to `csv` file
+
+```{r annotateGeneSymbols}
+# annotations
+annotation(combined_dataset)
+#rownames(rma_eset)
+genenames <- rownames(combined_eset)
+genenames
+#geneID <- getEG(genenames, "hgu133plus2.db")
+geneID <- getEG(genenames, annotation(combined_dataset))
+geneSymbols <- getSYMBOL(genenames, annotation(combined_dataset))
+
+geneID[1:5]
+geneSymbols[1:5]
+
+
+# print gene expressions
+test <- data.frame(geneSymbols, rma_eset)
+res <- data.frame(geneID, test)
+res[1:1,]
+# output to file
+basename <- jchoose.files(default = working_dir, caption = "Select preprocessed filename", multi = FALSE)
+#basename <- "test_preprocessed.csv"
+fname <- paste(gsub(" ", "", working_dir), basename, sep="/")
+fname
+write.csv(res, file=fname)
+```
+
+## CRC Subtype prediction
++ create dataframe with corresponding gene symbols
++ https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4636487/
++ four consensus molecular subtypes (CMS) 1-4
+  + CMS1: (MSI Immune)
+  + CMS2: (Canonical)
+  + CMS3: (Metabolic)
+  + CMS4: (Mesenchymal)
++ background: https://www.nature.com/articles/s41598-017-16747-x#Sec7
++ cmscaller: https://github.com/peterawe/CMScaller
+  + classification based on pre-defined cancer-cell intrinsic CMS templates
+  + uses nearest template prediction (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2990751/)
+    + nearest neighbor-based
+    + requires gene signatures + dataset
+    + define representative expression pattern of signature genes (template)
+    + find nearest template to assign a prediction label to test sample
+    + compute predictioin confidence
+    
+![NTP algorithm](https://www.researchgate.net/profile/Yujin-Hoshida/publication/49651967/figure/fig9/AS:341303238905869@1458384441783/Methodology-of-Nearest-Template-Prediction-NTP-Based-on-predetermined-gene-signature.png)
+
+```{r subtypePrediction}
+par(mfrow=c(1,2))
+
+# get input data (use preprocessed)
+#data <- ReadAffy()
+#rma_eset
+
+genenames <- rownames(rma_eset)
+#geneID <- getEG(genenames, "hgu133plus2.db")
+#geneID <- getEG(genenames, annotation(eset))
+geneSymbols <- getSYMBOL(genenames, annotation(eset))
+symbolNames <- as.vector(geneSymbols)
+#symbolNames
+
+# print gene expressions
+emat <- data.frame(rma_eset)
+row.names(emat) <- make.names(c(geneSymbols), unique=TRUE)
+#test
+#emat <- data.frame(geneID, test)
+
+
+# classify subtypes with cmscaller, input data was already preprocessed
+subtypes <- CMScaller(emat, RNAseq = FALSE, rowNames = "symbol", doPlot = FALSE)
+#subtypes
+
+# get/write output data
+write.csv(subtypes, file = "test_subtype_pred.csv")
+```

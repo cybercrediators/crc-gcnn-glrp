@@ -1,0 +1,7 @@
+tensorflow
+spektral
+numpy
+pandas
+rpy2
+pyyaml
+h5py

@@ -1,0 +1,226 @@
+---
+title: "WGCNA"
+author: "Sebastian Lutz"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+
+#BiocManager::install("preprocessCore", configure.args="--disable-threading")
+BiocManager::install("limma")
+BiocManager::install("affy")
+BiocManager::install("SpikeInSubset")
+BiocManager::install("annotate")
+BiocManager::install("lumi")
+BiocManager::install("arrayQualityMetrics")
+BiocManager::install("hgu133plus2.db")
+BiocManager::install("WGCNA")
+BiocManager::install("readr")
+BiocManager::install("tidyverse")
+
+library(WGCNA)
+library(tidyverse)
+library(readr)
+library(SpikeInSubset)
+library(limma)
+library(annotate)
+library(lumi)
+library(arrayQualityMetrics)
+library(hgu133plus2.db)
+```
+
+# Weighted Gene Correlation Network Analysis
++ Preprocessing (RMA)
+
+```{r Preprocessing}
+folder_path <- "/home/lutzseba/Desktop/ma/GSE8671/"
+fname <- "/home/lutzseba/Desktop/ma/GSE106582_non-normalized.txt.gz"
+
+# read data
+#setwd(folder_path)
+
+# read Illumina HumanHT-12 files
+#x <- read.ilmn(fname, probeid="ID_REF")
+#x <- read.csv(fname, sep='\t', header = TRUE, row.names = 1, stringsAsFactors = FALSE)
+
+#inp.lumi <- lumiR(fname, sep='\t')
+#lumiE <- lumiExpresso(inp.lumi, bg.correct = TRUE, normalize = TRUE, verbose = TRUE)
+#exprs <- exprs(lumiE)
+#pdat <- pData(lumiE)
+
+# read Affymetrix CEL files
+to_preprocess = list.files(path = folder_path, full.names = TRUE, pattern = "\\.CEL$")
+preprocess_data = ReadAffy(filenames = to_preprocess)
+
+# quality control
+#qc(preprocess_data)->preprocess_data.qc
+
+# apply rma probe summary, quantile normalization
+rma_normalized <- rma(preprocess_data, normalize=TRUE)
+eset <- exprs(rma_normalized)
+pdat <- pData(rma_normalized)
+eset
+pdat
+```
+
+
+# WGCNA
++ 5 WGCNA steps:
+  + Construct gene co-expression network
+    + calculate similarity matrix
+    + calculate adjacency matrix
+      + decide which type of network (unsigned, signed, signed hybrid)
+    + set soft-threshold beta
+      + scale independence OR mean connectivity
+    + create topological overlap matrix (TOM) from adj. matrix
+  + Identify modules
+    + form hierarchical clusterin/dendrogram using matrix value with pairwise comparison
+    + identify nested clusters (also outlier detection)
+  + relate modules to external information
+    + e.g. variable like weight, fat, hdl level ...
+  + study module relationships
+  + find key drivers in interesting modules
++ Limitations
+  + assumes linear/monotonic relationships among genes
+  + scale-free nw appropriate for protein-coding genes (only)
+  + robustness
+    + depends on sample size/data quality
+    
+```{r WGCNA pick soft threshold}
+
+allowWGCNAThreads()
+
+exprSet <- t(eset)
+
+
+annotation(rma_normalized)
+genenames <- rownames(rma_normalized)
+allGeneID <- getEG(genenames, annotation(rma_normalized))
+allGeneSymbols <- getSYMBOL(genenames, annotation(rma_normalized))
+
+
+powers <- c(c(1:10), seq(from = 1, to = 50, by = 2))
+powers
+
+
+sft <- pickSoftThreshold(exprSet, powerVector = powers, verbose = 5, networkType = "unsigned")
+
+par(mfrow = c(1,2))
+cex1 = 0.9
+plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],xlab="Soft Threshold (power)",ylab="Scale Free Topology Model Fit, signed R^2",type="n", main = paste("Scale independence"));
+text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],labels=powers,cex=cex1,col="red");
+
+# Red line corresponds to using an R^2 cut-off
+abline(h=0.80,col="red")
+
+# Mean connectivity as a function of the soft-thresholding power
+plot(sft$fitIndices[,1], sft$fitIndices[,5],xlab="Soft Threshold (power)",ylab="Mean Connectivity", type="n",main = paste("Mean connectivity"))
+text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
+
+# outlier detection
+#sampleTree = hclust(dist(exprSet), method = "average");
+## Plot the sample tree: Open a graphic output window of size 12 by 9 inches
+## The user should change the dimensions if the window is too large or too small.
+#sizeGrWindow(12,9)
+#par(cex = 0.6);
+#par(mar = c(0,4,2,0))
+#plot(sampleTree, main = "Sample clustering to detect outliers", sub="", xlab="", cex.lab = 1.5,
+#cex.axis = 1.5, cex.main = 2)
+
+```
+
+
+```{r Create Network}
+softThreshold <- 7
+
+tmp_cor <- cor
+cor <- WGCNA::cor
+
+net <- blockwiseModules(exprSet,
+                        power = softThreshold,
+                        networkType="unsigned",
+                        deepSplit = 2,
+                        pamRespectsDendro = FALSE,
+                        minModuleSize = 30,
+                        maxBlockSize = 4000,
+                        reassignThreshold = 0,
+                        mergeCutHeight = 0.25,
+                        saveTOMs = T,
+                        saveTOMFileBase = "ER",
+                        numericLabels = T,
+                        verbose = 3)
+
+
+cor <- tmp_cor
+
+mergedColors = labels2colors(net$colors)
+
+plotDendroAndColors(
+  net$dendrograms[[1]],
+  mergedColors[net$blockGenes[[1]]],
+  "Module Colors",
+  dendroLabels = FALSE,
+  hang = 0.03,
+  addGuide = TRUE,
+  guideHang = 0.3
+)
+```
+
+
+```{r Relate to Classification}
+label_path <- "/home/lutzseba/Desktop/ma/labels.txt"
+sample_labels <- as.matrix(read.table(label_path, sep = " ", header = TRUE))
+df <- data.frame(sample_labels)
+l <- as.numeric(unlist(as.list(df["Label"])))
+
+
+nGenes <- ncol(exprSet)
+nSamples <- nrow(exprSet)
+
+df <- data.frame(gene_id = names(net$colors), color = labels2colors(net$colors))
+write_delim(df, file = "gene_mods.txt", delim="\t")
+
+MEs0 <- moduleEigengenes(exprSet, mergedColors)$eigengenes
+
+# Reorder modules so similar modules are next to each other
+MEs0 <- orderMEs(MEs0)
+row.names(MEs0)
+module_order = names(MEs0)
+
+plotEigengeneNetworks(MEs0, "", marDendro = c(0,4,1,2), marHeatmap = c(3,4,1,2))
+
+l
+MEs0$samples <- row.names(MEs0)
+MEs0$labels <- l
+
+MEs = MEs0
+MEs = pivot_longer(MEs0, -samples)
+MEs
+ggplot(
+  MEs,
+  aes(x=samples, y=name, fill=value)) +
+  geom_tile() +
+  theme_bw() +
+  scale_fill_gradient2(
+    low = "blue",
+    high = "red",
+    mid = "white",
+    midpoint = 0,
+    limit = c(-1, 1)) +
+  theme(axis.text.x = element_text(angle=90)) +
+  labs(title = "Module-sample relationships", y = "Modules", fill = "corr")
+```
+
+# Sources
++ https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/Tutorials/
++ https://wikis.utexas.edu/display/bioiteam/Clustering+using+WGCNA
++ http://pklab.med.harvard.edu/scw2014/WGCNA.html
++ https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7052925/
++ https://www.nature.com/articles/s41598-022-06934-w#Sec16
++ https://bioinformaticsworkbook.org/tutorials/wgcna.html

@@ -1,0 +1,145 @@
+{
+    "chebnet_type": "chebnet2",
+    "num_epochs": 100,
+    "batch_size": 20,
+    "eval_frequency": 40,
+    "filter": "chebyshev5",
+    "brelu": "b1relu",
+    "pool": "max",
+    "test_split": 0.1,
+    "F": [
+        32,
+        32
+    ],
+    "K": [
+        8,
+        8
+    ],
+    "p": [
+        2,
+        2
+    ],
+    "M": [
+        512,
+        128,
+        2
+    ],
+    "regularization": 0.0001,
+    "dropout_conf": 1,
+    "dropout": 0.0,
+    "learning_rate": 0.001,
+    "decay_rate": 0.95,
+    "momentum": 0,
+    "decay_steps": 0,
+    "normalize": 1,
+    "patience": 5,
+    "early_stopping": 10,
+    "path_to_data": "/home/lutzseba/Desktop/ma/gcnn-and-grlp/data/test/",
+    "path_to_results": "/home/lutzseba/Desktop/ma/gcnn-and-grlp/results/test/",
+    "path_to_log": "/home/lutzseba/Desktop/ma/gcnn-and-grlp/log/test/",
+    "base_data_folder": "/home/lutzseba/Desktop/ma/gcnn-and-grlp/data/test/data/",
+    "preprocessed_csv_name": "test_preprocessed.csv",
+    "subtype_csv_name": "test_subtypes.csv",
+    "mapped_csv_name": "test_mapped.csv",
+    "label_csv_name": "test_labels.csv",
+    "label_txt_name": "labels.txt",
+    "concordance_csv_name": "test_concordance.csv",
+    "network_csv_name": "HPRD_PPI.csv",
+    "model_name": "test_model2",
+    "visualisation_url": "https://frankkramer-lab.github.io/MetaRelSubNetVis",
+    "epsilon": 1e-09,
+    "gamma": 1e-09,
+    "net_cx_description": "CRC orig - PPI generated subgraph without occurences",
+    "net_cx_name": "CRC extended - PPI subgraphs",
+    "net_cx_author": "Test McTestface",
+    "net_cx_type": "PPI",
+    "net_cx_organism": "Homo sapiens",
+    "net_cx_OccurenceInSubtype": [
+        "CMS1",
+        "CMS2",
+        "CMS3",
+        "CMS4",
+        "Normal"
+    ],
+    "net_cx_reference": "Chereda, H., Bleckmann, A., Menck, K. et al. Explaining decisions of graph convolutional neural networks: patient-specific molecular subnetworks responsible for metastasis prediction in breast cancer. Genome Med 13, 42 (2021). <a href=\"https://doi.org/10.1186/s13073-021-00845-7\" target=\"_blank\" style=\"font-size: 12px;\">https://doi.org/10.1186/s13073-021-00845-7</a><br/>",
+    "net_cx_sourceNetwork": "079f4c66-3b77-11ec-b3be-0ac135e8bacf",
+    "net_cx_version": "1.0",
+    "ndex_username": "lutzseba",
+    "ndex_password": "3p4hnX8wv6x5VBBCZkodaiEln",
+    "metarelsubnetvis_highlights": "#000000",
+    "metarelsubnetvis_properties": [
+        {
+            "property": "Occurrence",
+            "label": "Occurrence",
+            "mapping": {
+                "1": "#c7c7c7",
+                "69": "#388eff"
+            },
+            "type": "continuous",
+            "threshold": true
+        },
+        {
+            "property": "qvalue",
+            "label": "q-value",
+            "mapping": {
+                "1.0": "#c7c7c7",
+                "0.0": "#ff0000"
+            },
+            "type": "continuous",
+            "threshold": true
+        },
+        {
+            "property": "significant",
+            "label": "significant DE",
+            "mapping": {
+                "true": "#00bb00"
+            },
+            "type": "boolean",
+            "threshold": false
+        }
+    ],
+    "metarelsubnetvis_individual_properties": [
+        {
+            "property": "GE",
+            "label": "Gene Expression",
+            "mapping": {
+                "2.3": "#599eff",
+                "12.5": "#e8e857",
+                "14.7": "#ff3d6a"
+            },
+            "type": "continuous",
+            "threshold": true
+        },
+        {
+            "property": "GE_Level",
+            "label": "Gene Expression Level",
+            "mapping": {
+                "LOW": "#599eff",
+                "NORMAL": "#e8e857",
+                "HIGH": "#ff3d6a"
+            },
+            "type": "discrete",
+            "threshold": false
+        },
+        {
+            "property": "Score",
+            "label": "Relevance",
+            "mapping": {
+                "0.000001561": "#599eff",
+                "0.000155": "#e8e857",
+                "0.00152": "#ff3d6a"
+            },
+            "type": "continuous",
+            "threshold": true
+        },
+        {
+            "property": "MTB",
+            "label": "MTB results",
+            "mapping": {
+                "true": "#00bb00"
+            },
+            "type": "boolean",
+            "threshold": false
+        }
+    ]
+}

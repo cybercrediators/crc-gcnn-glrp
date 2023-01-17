@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>glrp.preprocessing package &#8212; glrp  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="glrp-preprocessing-package">
+<h1>glrp.preprocessing package<a class="headerlink" href="#glrp-preprocessing-package" title="Permalink to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-glrp.preprocessing.labels">
+<span id="glrp-preprocessing-labels-module"></span><h2>glrp.preprocessing.labels module<a class="headerlink" href="#module-glrp.preprocessing.labels" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.labels.generate_labels_from_preprocessed">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.labels.</span></span><span class="sig-name descname"><span class="pre">generate_labels_from_preprocessed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preprocessed_fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outp_fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.labels.generate_labels_from_preprocessed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a label file from the preprocessed gene expressions and the given
+label list</p>
+</dd></dl>
+
+</section>
+<section id="module-glrp.preprocessing.mapping">
+<span id="glrp-preprocessing-mapping-module"></span><h2>glrp.preprocessing.mapping module<a class="headerlink" href="#module-glrp.preprocessing.mapping" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.mapping.map_preprocessed_to_gene_list">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.mapping.</span></span><span class="sig-name descname"><span class="pre">map_preprocessed_to_gene_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preprocessed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.mapping.map_preprocessed_to_gene_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map preprocessed gene expressions onto a list of genes and
+return the resulting dict.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.mapping.map_preprocessed_to_graph">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.mapping.</span></span><span class="sig-name descname"><span class="pre">map_preprocessed_to_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preprocessed_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.mapping.map_preprocessed_to_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map a given preprocessed file onto a given network graph and write
+the output to the given output file name.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.mapping.write_output">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.mapping.</span></span><span class="sig-name descname"><span class="pre">write_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.mapping.write_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>write to mapped csv file</p>
+</dd></dl>
+
+</section>
+<section id="module-glrp.preprocessing.preprocess_r">
+<span id="glrp-preprocessing-preprocess-r-module"></span><h2>glrp.preprocessing.preprocess_r module<a class="headerlink" href="#module-glrp.preprocessing.preprocess_r" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.preprocess_r.combine_dataset">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.preprocess_r.</span></span><span class="sig-name descname"><span class="pre">combine_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.preprocess_r.combine_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merge multiple preprocessed datasets into a single csv</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.preprocess_r.preprocess_folder">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.preprocess_r.</span></span><span class="sig-name descname"><span class="pre">preprocess_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.preprocess_r.preprocess_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the R preprocessing script and preprocess the data
+in the given file path.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.preprocess_r.preprocess_scraped_data">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.preprocess_r.</span></span><span class="sig-name descname"><span class="pre">preprocess_scraped_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.preprocess_r.preprocess_scraped_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preprocess scraped data from the given folder with
+corresponding subfolders of sub-datasets.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.preprocess_r.preprocess_single">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.preprocess_r.</span></span><span class="sig-name descname"><span class="pre">preprocess_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.preprocess_r.preprocess_single" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the R preprocessing script and preprocess the data
+in the given file path.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.preprocess_r.quant_norm">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.preprocess_r.</span></span><span class="sig-name descname"><span class="pre">quant_norm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.preprocess_r.quant_norm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.preprocess_r.quantile_normalisation">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.preprocess_r.</span></span><span class="sig-name descname"><span class="pre">quantile_normalisation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combined_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.preprocess_r.quantile_normalisation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quantile normalize a given pandas dataframe</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.preprocess_r.sanitize_data">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.preprocess_r.</span></span><span class="sig-name descname"><span class="pre">sanitize_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datasets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.preprocess_r.sanitize_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove unnotated rows and duplicates</p>
+</dd></dl>
+
+</section>
+<section id="module-glrp.preprocessing.rbridge">
+<span id="glrp-preprocessing-rbridge-module"></span><h2>glrp.preprocessing.rbridge module<a class="headerlink" href="#module-glrp.preprocessing.rbridge" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="glrp.preprocessing.rbridge.RBridge">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.rbridge.</span></span><span class="sig-name descname"><span class="pre">RBridge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">script_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.rbridge.RBridge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Call and use functions from existing
+R scripts</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.rbridge.RBridge.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.rbridge.RBridge.call" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-glrp.preprocessing.scrape">
+<span id="glrp-preprocessing-scrape-module"></span><h2>glrp.preprocessing.scrape module<a class="headerlink" href="#module-glrp.preprocessing.scrape" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.DownloadProgress">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.scrape.</span></span><span class="sig-name descname"><span class="pre">DownloadProgress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">__</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.DownloadProgress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tqdm</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.DownloadProgress.update_to">
+<span class="sig-name descname"><span class="pre">update_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.DownloadProgress.update_to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.scrape.</span></span><span class="sig-name descname"><span class="pre">GeoScraper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.build_url">
+<span class="sig-name descname"><span class="pre">build_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.build_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.clean_raw_files">
+<span class="sig-name descname"><span class="pre">clean_raw_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.clean_raw_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove downloaded raw tar files from the base data folder</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.download" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.download_code">
+<span class="sig-name descname"><span class="pre">download_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.download_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download a given geo accession code into a subfolder of a given name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.download_file">
+<span class="sig-name descname"><span class="pre">download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.download_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download geo datasets from a given txt file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.full_prepare_data">
+<span class="sig-name descname"><span class="pre">full_prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codes_fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.full_prepare_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download and prepare RAW data for further preprocessing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.read_codes">
+<span class="sig-name descname"><span class="pre">read_codes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.read_codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>read gse codes from a filename and return them</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.unpack_cel">
+<span class="sig-name descname"><span class="pre">unpack_cel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.unpack_cel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpack a given .cel.gz file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.unpack_files">
+<span class="sig-name descname"><span class="pre">unpack_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.unpack_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpack all downloaded files in the current data folder</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glrp.preprocessing.scrape.GeoScraper.unpack_tar">
+<span class="sig-name descname"><span class="pre">unpack_tar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.scrape.GeoScraper.unpack_tar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unpack a given .tar archive.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-glrp.preprocessing.subclass_prediction">
+<span id="glrp-preprocessing-subclass-prediction-module"></span><h2>glrp.preprocessing.subclass_prediction module<a class="headerlink" href="#module-glrp.preprocessing.subclass_prediction" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="glrp.preprocessing.subclass_prediction.subtype_prediction">
+<span class="sig-prename descclassname"><span class="pre">glrp.preprocessing.subclass_prediction.</span></span><span class="sig-name descname"><span class="pre">subtype_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#glrp.preprocessing.subclass_prediction.subtype_prediction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the R preprocessing script and preprocess the data
+in the given file path.</p>
+</dd></dl>
+
+</section>
+<section id="module-glrp.preprocessing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-glrp.preprocessing" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">glrp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Sebastian Lutz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/glrp.preprocessing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

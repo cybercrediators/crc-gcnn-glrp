@@ -1,0 +1,148 @@
+---
+title: "Gene Expression Analysis"
+author: "Sebastian Lutz"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+#BiocManager::install("preprocessCore", configure.args="--disable-threading")
+BiocManager::install("limma")
+BiocManager::install("affy")
+BiocManager::install("SpikeInSubset")
+BiocManager::install("annotate")
+BiocManager::install("lumi")
+BiocManager::install("arrayQualityMetrics")
+BiocManager::install("hgu133plus2.db")
+
+library(affy)
+library(SpikeInSubset)
+library(limma)
+library(annotate)
+library(lumi)
+library(arrayQualityMetrics)
+library(hgu133plus2.db)
+```
+
+# Differential gene expression analysis
+
+## Preprocessing and Quality Control
++ Affy/lumi package to import and preprocess the data
++ Perform the `rma`-algorithm to stabilize and normalize the data
++ Create an expression set
++ Get some quality control information
+
+```{r Preprocessing}
+folder_path <- "/home/lutzseba/Desktop/ma/gcnn-and-grlp/data/crc/data/"
+
+# read data
+#setwd(folder_path)
+
+# read Illumina HumanHT-12 files
+#x <- read.ilmn(fname, probeid="ID_REF")
+#x <- read.csv(fname, sep='\t', header = TRUE, row.names = 1, stringsAsFactors = FALSE)
+
+#inp.lumi <- lumiR(fname, sep='\t')
+#lumiE <- lumiExpresso(inp.lumi, bg.correct = TRUE, normalize = TRUE, verbose = TRUE)
+#exprs <- exprs(lumiE)
+#pdat <- pData(lumiE)
+
+# read Affymetrix CEL files
+to_preprocess = list.files(path = folder_path, full.names = TRUE, pattern = "\\.CEL$")
+preprocess_data = ReadAffy(filenames = to_preprocess)
+
+# quality control
+qc(preprocess_data)->preprocess_data.qc
+
+# apply rma probe summary, quantile normalization
+rma_normalized <- rma(preprocess_data, normalize=TRUE)
+eset <- exprs(rma_normalized)
+pdat <- pData(rma_normalized)
+
+
+# Show difference between raw data and normalization
+boxplot(preprocess_data, target = "core", main = "Boxplot raw data")
+boxplot(rma_normalized, target = "core", main = "Boxplot normalized data")
+
+AffyRNAdeg(preprocess_data) -> RNAdeg
+plotAffyRNAdeg(RNAdeg)
+summaryAffyRNAdeg(RNAdeg)
+arrayQualityMetrics(expressionset = preprocess_data,
+                    outdir = "CRC_dataset_normalized",
+                    forces = TRUE)
+
+arrayQualityMetrics(expressionset = rma_normalized,
+                    outdir = "CRC_dataset_raw",
+                    forces = TRUE)
+eset
+pdat
+```
+# Evaluation
+
+```{r Tests}
+# read labels
+label_path <- "/home/lutzseba/Desktop/ma/gcnn-and-grlp/data/crc/data/subtypes.csv"
+sample_labels <- read.csv(label_path)
+sample_labels[is.na(sample_labels)] = 'Normal'
+# print(sample_labels)
+
+design <- model.matrix(~0 + factor(c(sample_labels$pred)))
+colnames(design) <- c("CMS1", "CMS2", "CMS3", "CMS4", "Normal")
+design
+
+# sample_labels <- as.matrix(read.table(label_path, sep = " ", header = TRUE))
+# df <- data.frame(sample_labels)
+# l <- as.numeric(unlist(as.list(df["pred"])))
+# l
+# design <- model.matrix(~0 + factor(c(l)))
+# colnames(design) <- c("CMS1", "CMS2", "CMS3", "CMS4", "Normal")
+# design
+
+
+annotation(rma_normalized)
+genenames <- rownames(rma_normalized)
+allGeneID <- getEG(genenames, annotation(rma_normalized))
+allGeneSymbols <- getSYMBOL(genenames, annotation(rma_normalized))
+
+# fit linear model
+fit <- lmFit(rma_normalized, design)
+fit$coefficients[1:3,]
+
+# hypotheses tests
+ebayes <- eBayes(fit)
+ebayes
+names(ebayes)
+tbl <- topTable(ebayes, coef=2, number=100)
+
+# add gene symbols
+genenames <- rownames(tbl)
+geneID <- getEG(genenames, annotation(rma_normalized))
+geneSymbols <- getSYMBOL(genenames, annotation(rma_normalized))
+
+test <- data.frame(geneSymbols, tbl)
+res <- data.frame(geneID, test)
+res
+volcano_names <- ifelse(abs(ebayes$coefficients)>=1, allGeneSymbols, NA)
+             
+             
+volcanoplot(ebayes, coef = 1L, style = "p-value", highlight = 100, 
+            names = volcano_names,
+            xlab = "Log2 Fold Change", ylab = NULL, pch=16, cex=0.35)
+
+
+#  
+```
+
+
+# Sources
++ https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6063319/
++ https://www.rc.fas.harvard.edu/wp-content/uploads/2012/11/Microarray_with_R_and_bioconductor.pdf
++ http://barc.wi.mit.edu/education/bioinfo2007/arrays/array_exercises_1R.html
++ http://barc.wi.mit.edu/education/bioinfo2007/arrays/array_exercises_2R.html
++ https://www.frontiersin.org/articles/10.3389/fonc.2020.573295/full
++ https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6305824/
++ http://bioconductor.org/packages/release/bioc/html/lumi.html
