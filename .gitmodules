@@ -1,0 +1,3 @@
+[submodule "spektral"]
+	path = spektral
+	url = https://github.com/cybercrediators/spektral
