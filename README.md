@@ -1,6 +1,4 @@
-# GCNN-and-GRLP
-
-Optimization of Graph Convolution Neural Networks and Graph Layer-wise Relevance Propagation with application to gene expres-sion data of Colorectal Cancer patients
+# Adaptation of Graph Convolutional Neural Networks and Graph Layer-wise Relevance Propagation to the Spektral library with appli-cation to gene expression data of Colorectal Cancer patients
 
 + [README](./glrp/README.md)
 + [Sphinx Doc](./glrp/docs/_build/html/index.html)
@@ -15,5 +13,3 @@ Optimization of Graph Convolution Neural Networks and Graph Layer-wise Relevance
   + [Preprocessing](./doc/preprocessing.md)
   + [Results](./doc/results.md)
   + [Sources](./doc/sources.md)
-
-+ Spektral: https://github.com/cybercrediators/spektral
